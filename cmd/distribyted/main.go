@@ -33,13 +33,19 @@ const (
 )
 
 func main() {
+	config_default := os.Getenv("XDG_CONFIG_HOME")
+	if config_default == "" {
+		config_default = "./distribyted-data/config/config.yaml"
+	} else {
+		config_default = config_default + "/distribyted/config.yaml"
+	}
 	app := &cli.App{
 		Name:  "distribyted",
 		Usage: "Torrent client with on-demand file downloading as a filesystem.",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:    configFlag,
-				Value:   "./distribyted-data/config/config.yaml",
+				Value:   config_default,
 				EnvVars: []string{"DISTRIBYTED_CONFIG"},
 				Usage:   "YAML file containing distribyted configuration.",
 			},
